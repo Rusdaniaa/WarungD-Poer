@@ -52,6 +52,7 @@ if(!empty(trim($email)) && !empty(trim($pass))){
     </head>
     <body>
         <form action="login.php" method="POST">
+            <p>Login guys</p>
             <p>email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" name="txt_email"></p>
             <p>password : <input type="password" name="txt_pass"></p>
             <button type="submit" name="submit">Sign In</button>
