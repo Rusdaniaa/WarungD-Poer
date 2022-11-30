@@ -6,6 +6,7 @@ session_start();
 if (isset($_POST['submit'])){
     $email = $_POST["txt_email"];
     $pass = $_POST['txt_pass'];
+    #rasigahhmaa
 
     /*
     $emailCheck = mysqli_real_escape_string($koneksi, $email);
