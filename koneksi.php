@@ -2,7 +2,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$db = "warungdpoer";
+$db = "db_dpoer";
    
 $konek = mysqli_connect($host, $username, $password, $db);
 
