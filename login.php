@@ -1,51 +1,4 @@
-<?php
-require ('koneksi.php');
 
-session_start();
-
-if (isset($_POST['submit'])){
-    $email = $_POST["txt_email"];
-    $pass = $_POST['txt_pass'];
-
-    /*
-    $emailCheck = mysqli_real_escape_string($koneksi, $email);
-    %passCheck= mysqli_real_escape_string($koneksi, $pass);
-    */
-
-if(!empty(trim($email)) && !empty(trim($pass))){
-    //select data berdasarkan username dari database 
-    $query = "SELECT *FROM user WHERE email = '$email'";
-    $result = mysqli_query($konek, $query);
-    $num = mysqli_num_rows($result);
-
-    while( $row = mysqli_fetch_array($result)){
-        $id = $row ['id_user'];
-        $UserVal = $row ['email'];
-        $passVal = $row ['password'];
-        $userName = $row['nama_user'];
-        $level = $row ['level'];
-    }
-    if ($num != 0){
-        if($UserVal==$email && $passVal==$pass){
-            //header('Location: home.php?user_fullname=' . urlencode($userName));
-            $_SESSION['id']= $id;
-            $_SESSION['name']=$userName;
-            $_SESSION['level']=$level;
-            header('Location: home.php');
-        }else{
-            $error = 'user atau password salah!';
-            header ('Location:login.php');
-        }
-    }else{
-        $error = 'user atau password salah!!';
-        header('Location login.php');
-    }
-}else{
-    $error = 'Data tidak boleh kosong !!';
-    echo $error;
-}
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +43,7 @@ if(!empty(trim($email)) && !empty(trim($pass))){
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" action="login.php" method="POST">
+                                    <form class="user" action="cek_login.php" method="POST">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
