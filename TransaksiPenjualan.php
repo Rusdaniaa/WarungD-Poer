@@ -99,7 +99,7 @@ $sesLvl=$_SESSION['level'];
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Transaksi:</h6>
-                        <a class="collapse-item" href="TransaksiPenjualan.php">Penjualan</a>
+                        <a class="collapse-item" href="Transaksipenjualan.php">Penjualan</a>
                         <a class="collapse-item" href="TransaksiPembelian.php">pembelian</a>
 
                     </div>
@@ -114,19 +114,9 @@ $sesLvl=$_SESSION['level'];
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Penjualan</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">pembelian</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Laba Rugi</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
+                        <h6 class="collapse-header">Laporan</h6>
+                        <a class="collapse-item" href="utilities-color.html">Penjualan</a>
+                        <a class="collapse-item" href="utilities-border.html">Pembelian</a> 
                     </div>
                 </div>
             </li>
@@ -354,70 +344,93 @@ $sesLvl=$_SESSION['level'];
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <!--Action boxes-->
+  <div class="container-fluid">
+    <div class="row-fluid">
+    <?php
+      if($r['id_level'] == 1){
+    ?>
+      <div class="widget-box">
+        <div class="widget-title bg_lg"><span class="icon"><i class="icon-th-large"></i></span>
+          <h5>Referensi Makanan</h5>
+          <a href="tambah_menu.php" class="btn btn-info btn-mini label"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
+        </div>
+        <div class="widget-content" >
+          <ul class="thumbnails">
+            <div class="btn-icon-pg">
+              <ul>
+                <!--Looping-->
+                <?php
+                  $query_data_makanan = "select * from tb_masakan order by id_masakan desc";
+                  $sql_data_makanan = mysqli_query($conn, $query_data_makanan);
+                  $no_makanan = 1;
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Data Master</h1>
+                  while($r_dt_makanan = mysqli_fetch_array($sql_data_makanan)){
+                ?>
+                    <li class="span2"> 
+                      <a> <img src="gambar/<?php echo $r_dt_makanan['gambar_masakan']?>" alt="" > </a>
+                      <div class="actions">
+                        <a class="lightbox_trigger" href="gambar/<?php echo $r_dt_makanan['gambar_masakan'];?>"><i class="icon-search"></i>&nbsp;Lihat</a> 
+                      </div>
+                      <table class="table table-bordered">
+                        <tbody>
+                          <tr>
+                            <td><?php echo $r_dt_makanan['nama_masakan'];?></td>
+                          </tr>
+                          <tr>
+                            <td>Harga / Porsi</td>
+                            <td>Rp. <?php echo $r_dt_makanan['harga'];?>,-</td>
+                          </tr>
+                          <tr>
+                            <td>Stok</td>
+                            <td><?php echo $r_dt_makanan['stok'];?> Porsi</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <form action="" method="post">
+                        <button type="submit" value="<?php echo $r_dt_makanan['id_masakan'];?>" name="edit_menu" class="btn btn-success btn-mini"><i class='icon-pencil'></i>&nbsp;&nbsp;Edit &nbsp;&nbsp;</button>
+                        <button type="submit" value="<?php echo $r_dt_makanan['id_masakan'];?>" name="hapus_menu" class="btn btn-mini btn-danger"><i class='icon icon-trash'></i>&nbsp; Hapus</button>
+                      </form>
+                    </li>
+                  <?php
+                    }
+                    if(isset($_REQUEST['hapus_menu'])){
+                      //echo $_REQUEST['hapus_menu'];
+                      $id_masakan = $_REQUEST['hapus_menu'];
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Data User</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            
-                                            <th>Email</th>
-                                            <th>Nama</th>
-                                            
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            $query = "SELECT * FROM user";
-                                            $result = mysqli_query($konek, $query); 
-                                            $no = 1;      
-                                            if ($sesLvl == 1) {
-                                                $dis = "";    
-                                            }else{
-                                                $dis = "disabled";
-                                            }        
-                                            while ($row = mysqli_fetch_array($result)){
-                                                $userId = $row['id_user'];
-                                                $userMail = $row['email'];
-                                                $userName = $row['nama_user'];
-                                                $userLevel = $row['level'];
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $no; ?></td>
-                                            <td><?php echo $userMail; ?></td>
-                                            <td><?php echo $userName; ?></td>
-                                            
-                                            <td>
-                                            <a href="edit.php?id= <?php echo $row['id_user']; ?>" class="btn btn-primary btn-circle <?php echo $dis; ?>"><i class="fas fa-pen"></i></a>
+                      $query_lihat = "select * from tb_masakan where id_masakan = $id_masakan";
+                      $sql_lihat = mysqli_query($conn, $query_lihat);
+                      $result_lihat = mysqli_fetch_array($sql_lihat);
+                      if(file_exists('gambar/'.$result_lihat['gambar_masakan'])){
+                        //echo $result_lihat['gambar_masakan'];
+                        unlink('gambar/'.$result_lihat['gambar_masakan']);
+                      }
+                      $query_hapus_masakan = "delete from tb_masakan where id_masakan = $id_masakan";
+                      $sql_hapus_masakan= mysqli_query($conn, $query_hapus_masakan);
+                      if($sql_hapus_masakan){
+                        header('location: entri_referensi.php');
+                      }
+                    }
 
-                                            <a href="#" class="btn btn-danger btn-circle <?php echo $dis;?>" onClick="confirmModal('hapus.php?&id=<?php echo $row['id_user']; ?>');"><i class="fas fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                            $no++;
-                                            }
-                                        ?>
-                                    </tbody>
-                                </table>
+                    if(isset($_REQUEST['edit_menu'])){
+                      //echo $_REQUEST['hapus_menu'];
+                      $id_masakan = $_REQUEST['edit_menu'];
+                      $_SESSION['edit_menu'] = $id_masakan;
 
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
+                      header('location: tambah_menu.php');
+                    }
+                  ?>
+                <!--End Looping-->
+              </ul>
+            </div>
+          </ul>
+        </div>
+      </div>
+      <?php
+        }
+      ?>
+    </div>
+<!--End-Action boxes-->   
 
             </div>
             <!-- End of Main Content -->

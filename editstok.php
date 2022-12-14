@@ -1,15 +1,28 @@
 <?php
-require ("koneksi.php");
-$email = isset($_GET['user_fullname']);
-session_start();
+//require ('koneksi.php');
+require 'koneksi.php';
+if(isset($_POST['update'])){
+    $userId = $_POST['txt_id'];
+    $userMail = $_POST['txt_email'];
+    $userPass = $_POST['txt_pass'];
+    $userName = $_POST['txt_nama'];
 
-if(!isset($_SESSION['id'])){
-    $_SESSION['msg']='anda harus login untuk mengakses halaman ini';
-    header('Location: login.php');
+    $query = "UPDATE user SET password='$userPass', nama_user='$userName' WHERE id_user='$userId'";
+    echo $query;
+    $result = mysqli_query($konek, $query);
+    header('Location: home.php');
 }
-$sesID=$_SESSION['id'];
-$sesName=$_SESSION['name'];
-$sesLvl=$_SESSION['level'];
+
+$id = isset($_GET['id_user'])?$_GET['id_user']:''; 
+
+$query = "SELECT *FROM user WHERE id_user='$id'";
+$result = mysqli_query($konek, $query)or die(mysql_error());
+$nomor = 1;
+while ($row = mysqli_fetch_array($result)){
+    $id = $row ['id_user'];
+    $userMail = $row['email'];
+    $userPass = $row['password'];
+    $userName = $row['nama_user'];
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +61,7 @@ $sesLvl=$_SESSION['level'];
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -59,8 +72,8 @@ $sesLvl=$_SESSION['level'];
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -78,58 +91,17 @@ $sesLvl=$_SESSION['level'];
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Data Master</span>
+                    <span>Components</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">MASTER</h6>
+                        <h6 class="collapse-header">Master Data:</h6>
                         <a class="collapse-item" href="table.php">User</a>
-                        <a class="collapse-item" href="tablestok.php">Stok Barang</a>
-                        <a class="collapse-item" href="katalog.php">Katalog</a>
                     </div>
                 </div>
             </li>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Transaksi</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Halaman Transaksi:</h6>
-                        <a class="collapse-item" href="TransaksiPenjualan.php">Penjualan</a>
-                        <a class="collapse-item" href="TransaksiPembelian.php">pembelian</a>
 
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Laporan</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Penjualan</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">pembelian</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Laba Rugi</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                </div>
-            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -171,6 +143,7 @@ $sesLvl=$_SESSION['level'];
                             </div>
                         </div>
                     </form>
+                    
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -322,7 +295,7 @@ $sesLvl=$_SESSION['level'];
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $sesName; ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -358,60 +331,41 @@ $sesLvl=$_SESSION['level'];
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Data Master</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank"
+                            href="https://datatables.net">official DataTables documentation</a>.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Data User</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            
-                                            <th>Email</th>
-                                            <th>Nama</th>
-                                            
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            $query = "SELECT * FROM user";
-                                            $result = mysqli_query($konek, $query); 
-                                            $no = 1;      
-                                            if ($sesLvl == 1) {
-                                                $dis = "";    
-                                            }else{
-                                                $dis = "disabled";
-                                            }        
-                                            while ($row = mysqli_fetch_array($result)){
-                                                $userId = $row['id_user'];
-                                                $userMail = $row['email'];
-                                                $userName = $row['nama_user'];
-                                                $userLevel = $row['level'];
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $no; ?></td>
-                                            <td><?php echo $userMail; ?></td>
-                                            <td><?php echo $userName; ?></td>
-                                            
-                                            <td>
-                                            <a href="edit.php?id= <?php echo $row['id_user']; ?>" class="btn btn-primary btn-circle <?php echo $dis; ?>"><i class="fas fa-pen"></i></a>
+                            <form class="user" action="edit.php" method="POST">
+                                        <div class="form-group">
+                                            <input type="hidden" name="txt_id" value="<?php echo $id; ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user"
+                                                id="exampleInputEmail" name="txt_email" value="<?php echo $userMail;?>"readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                id="exampleInputPassword" name="txt_pass"value="<?php echo $userPass; ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="exampleInputPassword" name="txt_nama" value="<?php echo $userName;?>">
+                                        </div>
+                                        <button type="submit" name="update" class="btn btn-primary btn-user btn-block">Update</button>
 
-                                            <a href="#" class="btn btn-danger btn-circle <?php echo $dis;?>" onClick="confirmModal('hapus.php?&id=<?php echo $row['id_user']; ?>');"><i class="fas fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                            $no++;
-                                            }
-                                        ?>
-                                    </tbody>
-                                </table>
-
+                                        <hr>
+                                        
+                                    </form>
+                                    <p><a href="home.php">Kembali</p>    
+                                     
                             </div>
                         </div>
                     </div>
@@ -442,32 +396,31 @@ $sesLvl=$_SESSION['level'];
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
     <!--Delete Modal-->
     <div class="modal fade" id="modalDelete">
         <div class="modal-dialog">
             <div class="modal-content" style="margin-top:100px;">
-                <div class="modal-header">
-                    <h4 class="modal-title" style="text-align:center;">Hapus data ini?</h4>
-                    <button type="button" class="close" data-dismiss="modal" ariahidden="true">&times;</button>
-                </div>
-                <div class="modal-body">Pilih "Hapus" dibawah jika anda yakin ingin menghapus data.</div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-danger btn-sm" id="delete_link">Hapus</a>
-                    <button type="button" class="btn btn-success btn-sm" datadismiss="modal">Cancel</button>
-                </div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" arial-hidden="true">
+                    &times;</button>
+                <h4 class="modal-title" style="text-align:center;">Anda yakin akan menghapus data ini...<h4>
+            </div>
+
+            <div class="modal-footer" style="margin:0px; border-top:0px; text-align:center;">
+            <a href="#" class="btn btn-danger btn-sm" id="delete_link">Hapus</a>
+            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
             </div>
         </div>
     </div>
-
-    <!-- Javascript untuk popup modal Delete-->
+    <!--Javascript untuk popup modal Delete-->
     <script type="text/javascript">
-    function confirmModal(delete_url){
-        $('#modalDelete').modal('show', {backdrop: 'static'});
-        document.getElementById('delete_link').setAttribute('href' , delete_url);
-    }
-    </script>
+        function confirmModal(delete_url){
+            $('#modalDelete').modal('show',{backdrop: 'static'});
+            document.getElementById('delete_link').setAttribute('href', delete_url);
+        }
 
+    </script>
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -482,7 +435,8 @@ $sesLvl=$_SESSION['level'];
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    
+                    <a class="btn btn-primary" href = "logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -508,3 +462,4 @@ $sesLvl=$_SESSION['level'];
 </body>
 
 </html>
+<?php } ?>

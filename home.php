@@ -3,7 +3,7 @@ require ("koneksi.php");
 $email = isset($_GET['nama_user']);
 session_start();
 
-if(!isset($_SESSION['id_user'])){
+if(!isset($_SESSION['id'])){
     $_SESSION['msg']='anda harus login untuk mengakses halaman ini';
     header('Location: login.php');
 }
@@ -82,25 +82,50 @@ $sesLvl=$_SESSION['level'];
                         <h6 class="collapse-header">Data</h6>
                         <a class="collapse-item" href="table.php">User</a>
                         <a class="collapse-item" href="tablestok.php">Stok Barang</a>
+                        <a class="collapse-item" href="katalog.php">Katalog</a>
                     </div>
                 </div>
                 
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Transaksi</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Halaman Transaksi:</h6>
+                        <a class="collapse-item" href="TransaksiPenjualan.php">Penjualan</a>
+                        <a class="collapse-item" href="TransaksiPembelian.php">pembelian</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Laporan</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Laporan</h6>
+                        <a class="collapse-item" href="LaporanPenjualan.php">Penjualan</a>
+                        <a class="collapse-item" href="LaporanPembelian.php">Pembelian</a> 
+                    </div>
+                </div>
+            </li>
+            
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
 
-            
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 
-            
-            
-            
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            
+    
 
         </ul>
         <!-- End of Sidebar -->

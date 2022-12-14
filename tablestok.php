@@ -1,6 +1,6 @@
 <?php
 require ("koneksi.php");
-$email = isset($_GET['user_fullname']);
+$email = isset($_GET['nama_user']);
 session_start();
 
 if(!isset($_SESSION['id'])){
@@ -99,8 +99,8 @@ $sesLvl=$_SESSION['level'];
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Halaman Transaksi:</h6>
-                        <a class="collapse-item" href="TransaksiPenjualan.php">Penjualan</a>
-                        <a class="collapse-item" href="TransaksiPembelian.php">pembelian</a>
+                        <a class="collapse-item" href="penjualan.php">Penjualan</a>
+                        <a class="collapse-item" href="pembelian.php">pembelian</a>
 
                     </div>
                 </div>
@@ -114,19 +114,9 @@ $sesLvl=$_SESSION['level'];
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Penjualan</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">pembelian</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Laba Rugi</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
+                        <h6 class="collapse-header">Laporan</h6>
+                        <a class="collapse-item" href="utilities-color.html">Penjualan</a>
+                        <a class="collapse-item" href="utilities-border.html">Pembelian</a> 
                     </div>
                 </div>
             </li>
@@ -363,7 +353,7 @@ $sesLvl=$_SESSION['level'];
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Data User</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Data Stok Barang</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -372,15 +362,15 @@ $sesLvl=$_SESSION['level'];
                                         <tr>
                                             <th>No</th>
                                             
-                                            <th>Email</th>
-                                            <th>Nama</th>
+                                            <th> Nama Bahan</th>
+                                            <th>Sisa</th>
                                             
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $query = "SELECT * FROM user";
+                                            $query = "SELECT * FROM stok_opname";
                                             $result = mysqli_query($konek, $query); 
                                             $no = 1;      
                                             if ($sesLvl == 1) {
@@ -389,10 +379,10 @@ $sesLvl=$_SESSION['level'];
                                                 $dis = "disabled";
                                             }        
                                             while ($row = mysqli_fetch_array($result)){
-                                                $userId = $row['id_user'];
-                                                $userMail = $row['email'];
-                                                $userName = $row['nama_user'];
-                                                $userLevel = $row['level'];
+                                                $userId = $row['id_stok_opname'];
+                                                $userMail = $row['nama_bahan'];
+                                                $userName = $row['sisa_stok'];
+                                                #$userLevel = $row['level'];
                                         ?>
                                         <tr>
                                             <td><?php echo $no; ?></td>
@@ -400,9 +390,9 @@ $sesLvl=$_SESSION['level'];
                                             <td><?php echo $userName; ?></td>
                                             
                                             <td>
-                                            <a href="edit.php?id= <?php echo $row['id_user']; ?>" class="btn btn-primary btn-circle <?php echo $dis; ?>"><i class="fas fa-pen"></i></a>
+                                            <a href="editstok.php?id= <?php echo $row['id_stok_opname']; ?>" class="btn btn-primary btn-circle <?php echo $dis; ?>"><i class="fas fa-pen"></i></a>
 
-                                            <a href="#" class="btn btn-danger btn-circle <?php echo $dis;?>" onClick="confirmModal('hapus.php?&id=<?php echo $row['id_user']; ?>');"><i class="fas fa-trash"></i></a>
+                                            <a href="#" class="btn btn-danger btn-circle <?php echo $dis;?>" onClick="confirmModal('hapus.php?&id=<?php echo $row['id_stok_opname']; ?>');"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                         <?php
