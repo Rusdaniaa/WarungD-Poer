@@ -24,7 +24,7 @@ session_start();
             $_SESSION['email'] = $email;
             $_SESSION['level'] = "admin";
             // alihkan ke halaman dashboard admin
-            header("location:admin.php");
+            header("location:home.php");
 
             // cek jika user login sebagai pegawai
         }else if($data['level']=="kasir"){
@@ -49,10 +49,10 @@ session_start();
         }else{
 
             // alihkan ke halaman login kembali
-            header("location:index.php?pesan=gagal");
+            header("location:home.php?pesan=gagal");
         }
     }else{
-        header("location:index.php?pesan=gagal");
+        header("location:home.php?pesan=gagal");
     }
 
     
