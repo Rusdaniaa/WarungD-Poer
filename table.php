@@ -1,15 +1,12 @@
 <?php
 require ("koneksi.php");
-$email = isset($_GET['user_fullname']);
+$email = isset($_GET['nama_user']);
 session_start();
 
-if(!isset($_SESSION['id'])){
+if(!isset($_SESSION['level'])){
     $_SESSION['msg']='anda harus login untuk mengakses halaman ini';
     header('Location: login.php');
 }
-$sesID=$_SESSION['id'];
-$sesName=$_SESSION['name'];
-$sesLvl=$_SESSION['level'];
 ?>
 
 <!DOCTYPE html>
@@ -374,6 +371,7 @@ $sesLvl=$_SESSION['level'];
                                             
                                             <th>Email</th>
                                             <th>Nama</th>
+                                            <th>Level</th>
                                             
                                             <th>Aksi</th>
                                         </tr>
@@ -383,21 +381,18 @@ $sesLvl=$_SESSION['level'];
                                             $query = "SELECT * FROM user";
                                             $result = mysqli_query($konek, $query); 
                                             $no = 1;      
-                                            if ($sesLvl == 1) {
-                                                $dis = "";    
-                                            }else{
-                                                $dis = "disabled";
-                                            }        
+                                                
                                             while ($row = mysqli_fetch_array($result)){
                                                 $userId = $row['id_user'];
                                                 $userMail = $row['email'];
-                                                $userName = $row['nama_user'];
-                                                $userLevel = $row['level'];
+                                                $userName = $row['username'];
+                                                $userLevel = $row['user_level'];
                                         ?>
                                         <tr>
                                             <td><?php echo $no; ?></td>
                                             <td><?php echo $userMail; ?></td>
                                             <td><?php echo $userName; ?></td>
+                                            <td><?php echo $userLevel; ?></td>
                                             
                                             <td>
                                             <a href="edit.php?id= <?php echo $row['id_user']; ?>" class="btn btn-primary btn-circle <?php echo $dis; ?>"><i class="fas fa-pen"></i></a>
