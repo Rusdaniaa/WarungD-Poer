@@ -1,13 +1,4 @@
-<?php
-require ("koneksi.php");
-$email = isset($_GET['nama_user']);
-session_start();
 
-if(!isset($_SESSION['user_level'])){
-    $_SESSION['msg']='anda harus login untuk mengakses halaman ini';
-    header('Location: login.php');
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +25,16 @@ if(!isset($_SESSION['user_level'])){
 </head>
 
 <body id="page-top">
+<?php
+//require ("koneksi.php");
+//$email = isset($_GET['nama_user']);
+session_start();
+
+if($_SESSION['user_level']==""){
+    //$_SESSION['msg']='anda harus login untuk mengakses halaman ini';
+    header('Location:login.php');
+}
+?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -72,47 +73,18 @@ if(!isset($_SESSION['user_level'])){
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Master Data</span>
+                    <span>kasir</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Data</h6>
-                        <a class="collapse-item" href="table.php">User</a>
-                        <a class="collapse-item" href="tablestok.php">Stok Barang</a>
-                        <a class="collapse-item" href="katalog.php">Katalog</a>
+                        <h6 class="collapse-header"></h6>
+                        <a class="collapse-item" href="bill.php">Kasir</a>
                     </div>
                 </div>
                 
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Transaksi</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Halaman Transaksi:</h6>
-                        <a class="collapse-item" href="TransaksiPenjualan.php">Penjualan</a>
-                        <a class="collapse-item" href="TransaksiPembelian.php">pembelian</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Laporan</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Laporan</h6>
-                        <a class="collapse-item" href="LaporanPenjualan.php">Penjualan</a>
-                        <a class="collapse-item" href="LaporanPembelian.php">Pembelian</a> 
-                    </div>
-                </div>
-            </li>
+            
+            
             
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

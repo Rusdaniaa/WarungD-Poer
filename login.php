@@ -25,6 +25,13 @@
 </head>
 
 <body class="bg-gradient-primary">
+<?php 
+	if(isset($_POST['pesan'])){
+		if($_POST['pesan']=="gagal"){
+			echo "<div class='alert'>Username dan Password tidak sesuai !</div>";
+		}
+	}
+	?>
 
     <div class="container">
 
@@ -45,13 +52,13 @@
                                     </div>
                                     <form class="user" action="cek_login.php" method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                            <input type="text" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..." name="txt_email">
+                                                placeholder="Enter Email Address..." name="txt_email" require="required">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password" name="txt_pass">
+                                                id="exampleInputPassword" placeholder="Password" name="txt_pass" require="required">
                                         </div>
                                         <button type="submit" name="submit" class="btn btn-primary btn-user btn-block">Login</button>
 

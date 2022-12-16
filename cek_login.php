@@ -1,5 +1,5 @@
 <?php
-include ('koneksi.php');
+include 'koneksi.php';
 
 session_start();
 
@@ -19,37 +19,37 @@ session_start();
     if($cek > 0){
             // cek jika user login sebagai admin
         $data = mysqli_fetch_assoc($query);
-            if($data['level']=="admin"){
+            if($data['user_level']=="admin"){
             // buat session login dan username
             $_SESSION['email'] = $email;
-            $_SESSION['level'] = "admin";
+            $_SESSION['user_level'] = "admin";
             // alihkan ke halaman dashboard admin
             header("location:home.php");
 
             // cek jika user login sebagai pegawai
-        }else if($data['level']=="kasir"){
+        }else if($data['user_level']=="kasir"){
             // buat session login dan username
             $_SESSION['email'] = $email;
-            $_SESSION['level'] = "kasir";
+            $_SESSION['user_level'] = "kasir";
             // alihkan ke halaman dashboard pegawai
             header("location:kasir.php");
 
-        }else if($data['level']=="waiters"){
+        }else if($data['user_level']=="waiters"){
             // buat session login dan username
             $_SESSION['email'] = $email;
-            $_SESSION['level'] = "waiters";
+            $_SESSION['user_level'] = "waiters";
             // alihkan ke halaman dashboard pegawai
             header("location:waiters.php");
-        }else if($data['level']=="owner"){
+        }else if($data['user_level']=="owner"){
             // buat session login dan username
             $_SESSION['email'] = $email;
-            $_SESSION['level'] = "owner";
+            $_SESSION['user_level'] = "owner";
             // alihkan ke halaman dashboard pegawai
             header("location:owner.php");
         }else{
 
             // alihkan ke halaman login kembali
-            header("location:home.php?pesan=gagal");
+            header("location:login.php?pesan=gagal");
         }
     }else{
         header("location:home.php?pesan=gagal");

@@ -3,7 +3,7 @@ require ("koneksi.php");
 $email = isset($_GET['nama_user']);
 session_start();
 
-if(!isset($_SESSION['user_level'])){
+if($_SESSION['user_level']==""){
     $_SESSION['msg']='anda harus login untuk mengakses halaman ini';
     header('Location: login.php');
 }
@@ -75,57 +75,14 @@ if(!isset($_SESSION['user_level'])){
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Data Master</span>
+                    <span>Pesanan</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">MASTER</h6>
-                        <a class="collapse-item" href="table.php">User</a>
-                        <a class="collapse-item" href="tablestok.php">Stok Barang</a>
-                        <a class="collapse-item" href="katalog.php">Katalog</a>
+                        <a class="collapse-item" href="pesanan.php">Pesanan</a>
                     </div>
                 </div>
             </li>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Transaksi</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Halaman Transaksi:</h6>
-                        <a class="collapse-item" href="TransaksiPenjualan.php">Penjualan</a>
-                        <a class="collapse-item" href="TransaksiPembelian.php">pembelian</a>
-
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Laporan</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Penjualan</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">pembelian</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Laba Rugi</h6>
-                        <a class="collapse-item" href="utilities-color.html">per hari</a>
-                        <a class="collapse-item" href="utilities-border.html">per bulan</a> 
-                    </div>
-                </div>
             </li>
 
             <!-- Divider -->
@@ -356,16 +313,11 @@ if(!isset($_SESSION['user_level'])){
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Data Master</h1>
-
-                    <div align="right">
-                    <button type="button" name="age" id="age" data-toggle="modal" data-target="#add_data_Modal" class="btn btn-warning">Tambah</button>
-                    </div>
-                        <!-- DataTales Example -->
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Tambah </a>
+                    <!-- DataTales Example -->
+                    <br>
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                        
-                            <h6 class="m-0 font-weight-bold text-primary">Data User</h6>
-                        </div>
+                    
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
